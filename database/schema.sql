@@ -1,126 +1,148 @@
 -- Veritabanı oluşturma
-CREATE DATABASE IF NOT EXISTS aendir_core;
-USE aendir_core;
+CREATE DATABASE IF NOT EXISTS aendir;
+USE aendir;
 
--- Oyuncular tablosu
-CREATE TABLE IF NOT EXISTS players (
+-- Kullanıcılar tablosu
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    citizenid VARCHAR(50) UNIQUE,
-    cid INT DEFAULT 1,
-    license VARCHAR(255) UNIQUE,
-    name VARCHAR(255),
-    money JSON,
-    charinfo JSON,
-    job VARCHAR(50) DEFAULT NULL,
-    job_grade INT DEFAULT 0,
-    gang VARCHAR(50) DEFAULT NULL,
-    gang_grade INT DEFAULT 0,
-    position JSON,
-    metadata JSON,
-    inventory JSON,
+    identifier VARCHAR(50) NOT NULL UNIQUE,
+    license VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    money JSON NOT NULL,
+    charinfo JSON NOT NULL,
+    job JSON NOT NULL,
+    gang JSON NOT NULL,
+    position JSON NOT NULL,
+    metadata JSON NOT NULL,
+    inventory JSON NOT NULL,
     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Araçlar tablosu
-CREATE TABLE IF NOT EXISTS vehicles (
+-- Karakterler tablosu
+CREATE TABLE IF NOT EXISTS characters (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    plate VARCHAR(50) UNIQUE,
-    model VARCHAR(50),
-    owner VARCHAR(50),
-    stored BOOLEAN DEFAULT true,
-    fuel FLOAT DEFAULT 100.0,
-    body FLOAT DEFAULT 1000.0,
-    engine FLOAT DEFAULT 1000.0,
-    insurance BOOLEAN DEFAULT true,
-    tracker BOOLEAN DEFAULT false,
-    mods JSON,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    user_id INT NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    dateofbirth DATE NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    height INT NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Whitelist tablosu
+CREATE TABLE IF NOT EXISTS whitelist (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    identifier VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
+    discord VARCHAR(50) NOT NULL,
+    teamspeak VARCHAR(50) NOT NULL,
+    experience TEXT NOT NULL,
+    status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (identifier) REFERENCES users(identifier) ON DELETE CASCADE
 );
 
 -- Evler tablosu
 CREATE TABLE IF NOT EXISTS houses (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    owner VARCHAR(50),
-    price INT,
-    location JSON,
-    inventory JSON,
-    alarm BOOLEAN DEFAULT false,
-    camera BOOLEAN DEFAULT false,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    owner VARCHAR(50) DEFAULT NULL,
+    label VARCHAR(50) NOT NULL,
+    price INT NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    position JSON NOT NULL,
+    garage_position JSON NOT NULL,
+    storage_position JSON NOT NULL,
+    storage_size INT NOT NULL,
+    storage_items JSON NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES users(identifier) ON DELETE SET NULL
 );
 
 -- İşletmeler tablosu
 CREATE TABLE IF NOT EXISTS businesses (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    owner VARCHAR(50),
-    name VARCHAR(255),
-    type VARCHAR(50),
-    price INT,
-    employees JSON,
-    inventory JSON,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    owner VARCHAR(50) DEFAULT NULL,
+    label VARCHAR(50) NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    price INT NOT NULL,
+    position JSON NOT NULL,
+    inventory JSON NOT NULL,
+    money INT NOT NULL DEFAULT 0,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES users(identifier) ON DELETE SET NULL
 );
 
--- Çeteler tablosu
-CREATE TABLE IF NOT EXISTS gangs (
+-- Araçlar tablosu
+CREATE TABLE IF NOT EXISTS vehicles (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    type VARCHAR(50),
-    leader VARCHAR(50),
-    members JSON,
-    territory JSON,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Başarılar tablosu
-CREATE TABLE IF NOT EXISTS achievements (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    citizenid VARCHAR(50),
-    achievement VARCHAR(50),
-    completed BOOLEAN DEFAULT false,
-    completed_at TIMESTAMP NULL,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Görevler tablosu
-CREATE TABLE IF NOT EXISTS quests (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    citizenid VARCHAR(50),
-    quest VARCHAR(50),
-    progress JSON,
-    completed BOOLEAN DEFAULT false,
-    completed_at TIMESTAMP NULL,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    owner VARCHAR(50) DEFAULT NULL,
+    plate VARCHAR(8) NOT NULL UNIQUE,
+    model VARCHAR(50) NOT NULL,
+    stored BOOLEAN NOT NULL DEFAULT true,
+    garage VARCHAR(50) DEFAULT NULL,
+    position JSON NOT NULL,
+    properties JSON NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES users(identifier) ON DELETE SET NULL
 );
 
 -- Yetenekler tablosu
 CREATE TABLE IF NOT EXISTS skills (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    citizenid VARCHAR(50),
-    skill VARCHAR(50),
-    level INT DEFAULT 0,
-    xp INT DEFAULT 0,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    identifier VARCHAR(50) NOT NULL,
+    strength INT NOT NULL DEFAULT 0,
+    stamina INT NOT NULL DEFAULT 0,
+    driving INT NOT NULL DEFAULT 0,
+    shooting INT NOT NULL DEFAULT 0,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (identifier) REFERENCES users(identifier) ON DELETE CASCADE
 );
 
--- Evcil hayvanlar tablosu
-CREATE TABLE IF NOT EXISTS pets (
+-- Başarılar tablosu
+CREATE TABLE IF NOT EXISTS achievements (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    owner VARCHAR(50),
-    type VARCHAR(50),
-    name VARCHAR(255),
-    health FLOAT DEFAULT 100.0,
-    happiness FLOAT DEFAULT 100.0,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    identifier VARCHAR(50) NOT NULL,
+    achievement_id VARCHAR(50) NOT NULL,
+    unlocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (identifier) REFERENCES users(identifier) ON DELETE CASCADE
 );
 
--- Üretim tablosu
-CREATE TABLE IF NOT EXISTS production (
+-- Görevler tablosu
+CREATE TABLE IF NOT EXISTS quests (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    owner VARCHAR(50),
-    type VARCHAR(50),
-    item VARCHAR(50),
-    amount INT DEFAULT 0,
-    quality FLOAT DEFAULT 100.0,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-); 
+    identifier VARCHAR(50) NOT NULL,
+    quest_type VARCHAR(50) NOT NULL,
+    quest_id VARCHAR(50) NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT false,
+    completed_at TIMESTAMP NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (identifier) REFERENCES users(identifier) ON DELETE CASCADE
+);
+
+-- Loglar tablosu
+CREATE TABLE IF NOT EXISTS logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(50) NOT NULL,
+    identifier VARCHAR(50) NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    details JSON NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- İndeksler
+CREATE INDEX idx_users_identifier ON users(identifier);
+CREATE INDEX idx_characters_user_id ON characters(user_id);
+CREATE INDEX idx_whitelist_identifier ON whitelist(identifier);
+CREATE INDEX idx_houses_owner ON houses(owner);
+CREATE INDEX idx_businesses_owner ON businesses(owner);
+CREATE INDEX idx_vehicles_owner ON vehicles(owner);
+CREATE INDEX idx_vehicles_plate ON vehicles(plate);
+CREATE INDEX idx_skills_identifier ON skills(identifier);
+CREATE INDEX idx_achievements_identifier ON achievements(identifier);
+CREATE INDEX idx_quests_identifier ON quests(identifier);
+CREATE INDEX idx_logs_type ON logs(type);
+CREATE INDEX idx_logs_identifier ON logs(identifier); 

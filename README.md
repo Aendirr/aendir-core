@@ -1,121 +1,151 @@
-# Aendir Core Framework
+# Aendir Core
 
-Aendir Core, FiveM için geliştirilmiş kapsamlı bir roleplay framework'üdür.
+Aendir Core, FiveM için geliştirilmiş modern ve kapsamlı bir roleplay framework'üdür.
 
 ## Özellikler
 
-### 🎮 Temel Sistemler
+### 1. Karakter Sistemi
 - Çoklu karakter desteği
-- Gelişmiş karakter özelleştirme
-- Detaylı envanter sistemi
-- Gerçekçi ekonomi sistemi
-- Dinamik meslek sistemi
-- Ev ve işletme sistemi
-- Araç sistemi
-- Çete sistemi
+- Detaylı karakter bilgileri
+- Karakter oluşturma/düzenleme
+- Karakter silme
+- Karakter seçme
 
-### 🏠 Ev Sistemi
-- Ev satın alma/satma
-- Ev faturaları
-- Ev deposu
-- Güvenlik sistemleri
-- Kamera sistemleri
-- Mobilya sistemi
+### 2. Whitelist Sistemi
+- Discord entegrasyonu
+- Teamspeak entegrasyonu
+- Yaş kontrolü
+- Başvuru sistemi
+- Otomatik onay/red sistemi
 
-### 🚗 Araç Sistemi
-- Araç kayıt sistemi
-- Modifikasyon sistemi
-- Hasar sistemi
-- Yakıt sistemi
-- Sigorta sistemi
-- Takip sistemi
+### 3. Banka Sistemi
+- Çoklu banka lokasyonları
+- ATM'ler
+- Para transferi
+- Hesap yönetimi
+- Kredi sistemi
+
+### 4. Araç Sistemi
 - Garaj sistemi
+- Araç modifiye
+- Araç sigorta
+- Araç kiralama
+- Araç satın alma
+- Araç kategorileri:
+  - Polis Araçları
+  - Ambulans Araçları
+  - Taksi Araçları
+  - Sivil Araçlar
+  - SUV Araçlar
+  - Spor Araçlar
+  - Motosikletler
 
-### 💼 Meslek Sistemi
-- Polis
-- Paramedik
-- Mekanik
-- Ve daha fazlası...
-- Her meslek için:
-  - Rütbe sistemi
-  - Maaş sistemi
-  - Eşya sistemi
-  - Görev sistemi
-  - Vardiya sistemi
+### 5. Ev Sistemi
+- Ev tipleri:
+  - Daire
+  - Ev
+  - Malikane
+- Depolama sistemi
+- Ev satın alma/kiralama
+- Ev içi etkileşimler
+- Garaj entegrasyonu
 
-### 🎯 Diğer Özellikler
-- Başarı sistemi
-- Görev sistemi
-- Yetenek sistemi
-- Evcil hayvan sistemi
-- Üretim sistemi
-- Balıkçılık sistemi
-- Avcılık sistemi
-- Madencilik sistemi
-- Üretim sistemi
-- Telefon sistemi
-- Banka sistemi
-- Mağaza sistemi
+### 6. İşletme Sistemi
+- İşletme tipleri
+- İşletme yönetimi
+- Çalışan sistemi
+- Envanter yönetimi
+- Para yönetimi
+
+### 7. Envanter Sistemi
+- Ağırlık sistemi
+- Slot sistemi
+- Eşya tipleri:
+  - Silahlar
+  - Yiyecekler
+  - İçecekler
+  - Medikal
+  - Araçlar
+  - Diğer
+- Kullanım sistemi
+- Transfer sistemi
+
+### 8. Yetenek Sistemi
+- Güç
+- Dayanıklılık
+- Sürüş
+- Ateş Etme
+- Seviye sistemi
+- Tecrübe sistemi
+
+### 9. Başarı Sistemi
+- Başarı kategorileri
+- Ödül sistemi
+- İlerleme takibi
+- Bildirim sistemi
+
+### 10. Görev Sistemi
+- Görev tipleri
+- İlerleme sistemi
+- Ödül sistemi
+- Görev takibi
+
+### 11. Log Sistemi
+- Detaylı log kayıtları
+- Log kategorileri
+- Log filtreleme
+- Log arşivleme
+
+### 12. Admin Sistemi
+- Admin komutları
+- Yetki sistemi
+- Log sistemi
+- Oyuncu yönetimi
 
 ## Kurulum
 
 1. Dosyaları `resources` klasörüne kopyalayın
-2. `server.cfg` dosyasına ekleyin:
-   ```cfg
-   ensure aendir-core
-   ```
-3. Veritabanını kurun:
-   ```sql
-   source database/schema.sql
-   source database/items.sql
-   source database/vehicles.sql
-   ```
-4. Veritabanı bağlantı bilgilerini güncelleyin:
-   ```lua
-   MySQL.connect({
-       host = 'localhost',
-       user = 'root',
-       password = '',
-       database = 'aendir_core'
-   })
-   ```
+2. `server.cfg` dosyasına şu satırı ekleyin:
+```cfg
+ensure aendir-core
+```
+
+3. Veritabanını oluşturun:
+```bash
+mysql -u root -p < database/schema.sql
+mysql -u root -p aendir < database/items.sql
+mysql -u root -p aendir < database/vehicles.sql
+```
+
+4. `config.lua` dosyasını düzenleyin:
+- Sunucu ayarlarını
+- Discord webhook URL'sini
+- Teamspeak bilgilerini
 
 ## Gereksinimler
+
 - FiveM Server
-- MySQL
+- MySQL Server
+- Discord Bot
+- Teamspeak Server
+
+## Bağımlılıklar
+
 - ox_lib
 - oxmysql
 
-## Komutlar
-
-### Genel Komutlar
-- `/help` - Yardım menüsü
-- `/stats` - İstatistikler
-- `/skills` - Yetenekler
-
-### Araç Komutları
-- `/araclarim` - Araçlarım menüsü
-- `/modmenu` - Modifikasyon menüsü
-
-### Ev Komutları
-- `/evlerim` - Evlerim menüsü
-
-### Meslek Komutları
-- `/meslekler` - Meslekler menüsü
-
-## Tuş Atamaları
-- F6 - Araçlarım menüsü
-- F7 - Modifikasyon menüsü
-- F8 - Evlerim menüsü
-- F9 - Meslekler menüsü
-
 ## Lisans
+
 Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
 
-## Destek
-Herhangi bir sorun veya öneriniz için GitHub üzerinden issue açabilirsiniz.
+## İletişim
+
+- Discord: [Aendir](https://discord.gg/aendir)
+- Website: [www.aendir.com](https://www.aendir.com)
+- Teamspeak: ts.aendir.com
 
 ## Katkıda Bulunma
+
 1. Bu depoyu fork edin
 2. Yeni bir branch oluşturun (`git checkout -b feature/yeniOzellik`)
 3. Değişikliklerinizi commit edin (`git commit -am 'Yeni özellik eklendi'`)

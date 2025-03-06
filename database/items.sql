@@ -1,53 +1,47 @@
 -- Eşyalar tablosu
 CREATE TABLE IF NOT EXISTS items (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE,
-    label VARCHAR(255),
+    name VARCHAR(50) NOT NULL UNIQUE,
+    label VARCHAR(50) NOT NULL,
     description TEXT,
-    weight FLOAT DEFAULT 1.0,
-    type VARCHAR(50),
-    usable BOOLEAN DEFAULT false,
-    unique BOOLEAN DEFAULT false,
-    shouldClose BOOLEAN DEFAULT false,
-    combinable JSON,
+    type VARCHAR(20) NOT NULL,
+    weight FLOAT NOT NULL DEFAULT 1.0,
+    usable BOOLEAN NOT NULL DEFAULT false,
+    stackable BOOLEAN NOT NULL DEFAULT true,
+    closeonuse BOOLEAN NOT NULL DEFAULT true,
+    unique BOOLEAN NOT NULL DEFAULT false,
     image VARCHAR(255),
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Varsayılan eşyalar
-INSERT INTO items (name, label, description, weight, type, usable, unique, shouldClose, image) VALUES
--- Yiyecekler
-('bread', 'Ekmek', 'Taze pişmiş ekmek', 0.5, 'food', true, false, true, 'bread.png'),
-('water', 'Su', 'Temiz içme suyu', 0.5, 'drink', true, false, true, 'water.png'),
-('coffee', 'Kahve', 'Sıcak kahve', 0.5, 'drink', true, false, true, 'coffee.png'),
-('sandwich', 'Sandviç', 'Lezzetli sandviç', 0.5, 'food', true, false, true, 'sandwich.png'),
-
--- İlaçlar
-('bandage', 'Bandaj', 'Yaraları sarmak için bandaj', 0.1, 'medical', true, false, true, 'bandage.png'),
-('medkit', 'Medkit', 'Acil durum medkit', 1.0, 'medical', true, false, true, 'medkit.png'),
-('painkillers', 'Ağrı Kesici', 'Ağrı kesici ilaç', 0.1, 'medical', true, false, true, 'painkillers.png'),
-
+INSERT INTO items (name, label, description, type, weight, usable, stackable, closeonuse, unique, image) VALUES
 -- Silahlar
-('weapon_pistol', 'Tabanca', 'Standart tabanca', 1.0, 'weapon', false, true, false, 'pistol.png'),
-('weapon_rifle', 'Tüfek', 'Standart tüfek', 2.0, 'weapon', false, true, false, 'rifle.png'),
-('weapon_knife', 'Bıçak', 'Keskin bıçak', 0.5, 'weapon', false, true, false, 'knife.png'),
+('weapon_pistol', 'Pistol', 'Standart tabanca', 'weapon', 2.0, false, false, true, true, 'weapon_pistol.png'),
+('weapon_smg', 'SMG', 'Hafif makineli tüfek', 'weapon', 3.0, false, false, true, true, 'weapon_smg.png'),
+('weapon_rifle', 'Rifle', 'Tüfek', 'weapon', 4.0, false, false, true, true, 'weapon_rifle.png'),
 
--- Araç Eşyaları
-('repairkit', 'Tamir Seti', 'Araç tamir seti', 2.0, 'vehicle', true, false, true, 'repairkit.png'),
-('lockpick', 'Maymuncuk', 'Araç kilidi açma aleti', 0.1, 'vehicle', true, false, true, 'lockpick.png'),
-('phone', 'Telefon', 'Akıllı telefon', 0.5, 'electronics', true, false, true, 'phone.png'),
+-- Yiyecekler
+('bread', 'Ekmek', 'Taze ekmek', 'food', 0.5, true, true, true, false, 'bread.png'),
+('sandwich', 'Sandviç', 'Lezzetli sandviç', 'food', 0.5, true, true, true, false, 'sandwich.png'),
+('hamburger', 'Hamburger', 'Fast food hamburger', 'food', 0.5, true, true, true, false, 'hamburger.png'),
 
--- Meslek Eşyaları
-('handcuffs', 'Kelepçe', 'Polis kelepçesi', 1.0, 'police', true, false, true, 'handcuffs.png'),
-('radio', 'Telsiz', 'İletişim telsizi', 0.5, 'police', true, false, true, 'radio.png'),
-('badge', 'Rozet', 'Polis rozeti', 0.1, 'police', false, true, false, 'badge.png'),
+-- İçecekler
+('water', 'Su', 'Temiz su', 'drink', 0.5, true, true, true, false, 'water.png'),
+('cola', 'Kola', 'Soğuk kola', 'drink', 0.5, true, true, true, false, 'cola.png'),
+('coffee', 'Kahve', 'Sıcak kahve', 'drink', 0.5, true, true, true, false, 'coffee.png'),
 
--- Üretim Malzemeleri
-('iron', 'Demir', 'Ham demir', 1.0, 'material', false, false, false, 'iron.png'),
-('steel', 'Çelik', 'İşlenmiş çelik', 1.0, 'material', false, false, false, 'steel.png'),
-('wood', 'Odun', 'Ham odun', 1.0, 'material', false, false, false, 'wood.png'),
+-- Medikal
+('bandage', 'Bandaj', 'Yara bandajı', 'medical', 0.3, true, true, true, false, 'bandage.png'),
+('firstaid', 'İlk Yardım', 'İlk yardım çantası', 'medical', 0.5, true, true, true, false, 'firstaid.png'),
+('painkillers', 'Ağrı Kesici', 'Ağrı kesici ilaç', 'medical', 0.3, true, true, true, false, 'painkillers.png'),
 
--- Evcil Hayvan Eşyaları
-('dog_food', 'Köpek Maması', 'Köpekler için mama', 1.0, 'pet', true, false, true, 'dog_food.png'),
-('cat_food', 'Kedi Maması', 'Kediler için mama', 1.0, 'pet', true, false, true, 'cat_food.png'),
-('pet_toy', 'Evcil Hayvan Oyuncağı', 'Evcil hayvanlar için oyuncak', 0.5, 'pet', true, false, true, 'pet_toy.png'); 
+-- Araçlar
+('phone', 'Telefon', 'Akıllı telefon', 'misc', 0.5, true, false, true, true, 'phone.png'),
+('sim_card', 'SIM Kart', 'Telefon SIM kartı', 'misc', 0.1, false, false, true, true, 'sim_card.png'),
+('keys', 'Anahtar', 'Araç anahtarı', 'misc', 0.1, false, false, true, true, 'keys.png'),
+
+-- Diğer
+('money', 'Para', 'Nakit para', 'misc', 0.0, false, true, false, false, 'money.png'),
+('black_money', 'Kara Para', 'Kara para', 'misc', 0.0, false, true, false, false, 'black_money.png'),
+('gold', 'Altın', 'Değerli altın', 'misc', 1.0, false, true, false, false, 'gold.png'); 

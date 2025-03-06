@@ -1,50 +1,48 @@
 -- Araçlar tablosu
-CREATE TABLE IF NOT EXISTS vehicle_models (
+CREATE TABLE IF NOT EXISTS vehicles (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    model VARCHAR(50) UNIQUE,
-    label VARCHAR(255),
-    category VARCHAR(50),
-    price INT,
-    max_speed FLOAT,
-    acceleration FLOAT,
-    braking FLOAT,
-    handling FLOAT,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    owner VARCHAR(50) DEFAULT NULL,
+    plate VARCHAR(8) NOT NULL UNIQUE,
+    model VARCHAR(50) NOT NULL,
+    stored BOOLEAN NOT NULL DEFAULT true,
+    garage VARCHAR(50) DEFAULT NULL,
+    position JSON NOT NULL,
+    properties JSON NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES users(identifier) ON DELETE SET NULL
 );
 
 -- Varsayılan araçlar
-INSERT INTO vehicle_models (model, label, category, price, max_speed, acceleration, braking, handling) VALUES
--- Sivil Araçlar
-('blista', 'Blista', 'compact', 15000, 120.0, 7.0, 6.0, 7.0),
-('sultan', 'Sultan', 'sports', 45000, 160.0, 8.5, 7.5, 8.5),
-('tailgater', 'Tailgater', 'sedans', 35000, 140.0, 7.5, 7.0, 7.5),
-('schafter3', 'Schafter', 'sedans', 40000, 150.0, 8.0, 7.5, 8.0),
-
--- SUV Araçlar
-('granger', 'Granger', 'suvs', 55000, 130.0, 7.0, 7.0, 7.0),
-('huntley', 'Huntley', 'suvs', 65000, 150.0, 8.0, 7.5, 7.5),
-('patriot', 'Patriot', 'suvs', 35000, 120.0, 6.5, 6.5, 6.5),
-
--- Spor Araçlar
-('adder', 'Adder', 'super', 1000000, 200.0, 10.0, 9.0, 9.0),
-('zentorno', 'Zentorno', 'super', 950000, 195.0, 9.5, 8.5, 8.5),
-('t20', 'T20', 'super', 900000, 190.0, 9.0, 8.0, 8.0),
-
--- Motosikletler
-('bati', 'Bati 801', 'motorcycles', 15000, 160.0, 8.5, 7.0, 8.0),
-('hakuchou', 'Suzuki Hayabusa', 'motorcycles', 55000, 180.0, 9.0, 7.5, 8.5),
-('sanchez', 'Sanchez', 'motorcycles', 5000, 120.0, 6.5, 6.0, 7.0),
-
+INSERT INTO vehicles (owner, plate, model, stored, garage, position, properties) VALUES
 -- Polis Araçları
-('police', 'Police Cruiser', 'emergency', 0, 160.0, 8.0, 8.0, 8.0),
-('police2', 'Police Buffalo', 'emergency', 0, 170.0, 8.5, 8.5, 8.5),
-('police3', 'Police Interceptor', 'emergency', 0, 180.0, 9.0, 9.0, 9.0),
+(NULL, 'POLICE1', 'police', true, 'police_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'POLICE2', 'police2', true, 'police_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'POLICE3', 'police3', true, 'police_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
 
 -- Ambulans Araçları
-('ambulance', 'Ambulance', 'emergency', 0, 140.0, 7.0, 7.0, 7.0),
-('ambulance2', 'Ambulance 2', 'emergency', 0, 150.0, 7.5, 7.5, 7.5),
+(NULL, 'AMBULAN', 'ambulance', true, 'ambulance_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'AMBULAN2', 'ambulance2', true, 'ambulance_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
 
--- Ticari Araçlar
-('boxville', 'Boxville', 'vans', 35000, 100.0, 5.0, 6.0, 5.0),
-('speedo', 'Speedo', 'vans', 25000, 120.0, 6.0, 6.5, 6.0),
-('youga', 'Youga', 'vans', 30000, 110.0, 5.5, 6.0, 5.5); 
+-- Taksi Araçları
+(NULL, 'TAXI1', 'taxi', true, 'taxi_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'TAXI2', 'taxi2', true, 'taxi_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+
+-- Sivil Araçlar
+(NULL, 'CIVIL1', 'blista', true, 'civil_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'CIVIL2', 'brioso', true, 'civil_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'CIVIL3', 'issi2', true, 'civil_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+
+-- SUV Araçlar
+(NULL, 'SUV1', 'baller', true, 'suv_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'SUV2', 'granger', true, 'suv_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'SUV3', 'huntley', true, 'suv_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+
+-- Spor Araçlar
+(NULL, 'SPORT1', '9f', true, 'sport_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'SPORT2', 'adder', true, 'sport_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'SPORT3', 'zentorno', true, 'sport_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+
+-- Motosikletler
+(NULL, 'MOTO1', 'bati', true, 'moto_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'MOTO2', 'hakuchou', true, 'moto_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'),
+(NULL, 'MOTO3', 'thrust', true, 'moto_garage', '{"x": 442.0, "y": -1024.0, "z": 28.5, "w": 90.0}', '{"fuel": 100.0, "body": 1000.0, "engine": 1000.0, "mods": {}}'); 
