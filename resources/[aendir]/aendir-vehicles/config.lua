@@ -275,4 +275,136 @@ Config.Markers = {
     }
 }
 
+-- Yakıt Sistemi
+Config.FuelSystem = {
+    ConsumptionRate = 0.1, -- Yakıt tüketim oranı
+    RefuelCost = 5, -- Yakıt maliyeti
+    WarningLevel = 10.0, -- Yakıt uyarı seviyesi
+    MaxFuel = 100.0 -- Maksimum yakıt
+}
+
+-- Hasar Sistemi
+Config.DamageSystem = {
+    RepairCost = 100, -- Tamir maliyeti
+    WarningLevel = 500.0, -- Hasar uyarı seviyesi
+    EngineFailureLevel = 300.0, -- Motor arıza seviyesi
+    MaxHealth = 1000.0 -- Maksimum sağlık
+}
+
+-- Modifikasyon Sistemi
+Config.ModificationCategories = {
+    engine = {
+        name = 'Motor',
+        modType = 11,
+        maxLevel = 3,
+        cost = 1000
+    },
+    brakes = {
+        name = 'Frenler',
+        modType = 12,
+        maxLevel = 2,
+        cost = 800
+    },
+    transmission = {
+        name = 'Şanzıman',
+        modType = 13,
+        maxLevel = 2,
+        cost = 800
+    },
+    suspension = {
+        name = 'Süspansiyon',
+        modType = 15,
+        maxLevel = 3,
+        cost = 1000
+    },
+    turbo = {
+        name = 'Turbo',
+        modType = 18,
+        maxLevel = 1,
+        cost = 2000
+    },
+    cosmetics = {
+        name = 'Görünüm',
+        modType = 0,
+        maxLevel = 5,
+        cost = 500
+    }
+}
+
+-- Sigorta Sistemi
+Config.InsuranceSystem = {
+    Cost = 5000, -- Sigorta maliyeti
+    Coverage = 0.8, -- Sigorta kapsamı (%)
+    Duration = 7, -- Sigorta süresi (gün)
+    CancelFee = 1000 -- İptal ücreti
+}
+
+-- Çekme Sistemi
+Config.ImpoundSystem = {
+    BaseFee = 1000, -- Temel çekme ücreti
+    DamageMultiplier = 0.1, -- Hasar çarpanı
+    MaxFee = 5000, -- Maksimum çekme ücreti
+    Duration = 24 -- Çekme süresi (saat)
+}
+
+-- Takip Sistemi
+Config.TrackerSystem = {
+    UpdateInterval = 1000, -- Güncelleme aralığı (ms)
+    MaxTrackedVehicles = 5, -- Maksimum takip edilebilir araç sayısı
+    Cost = 1000 -- Takip cihazı maliyeti
+}
+
+-- Garaj Sistemi
+Config.GarageSystem = {
+    MaxVehicles = 10, -- Maksimum araç sayısı
+    SpawnDistance = 5.0, -- Spawn mesafesi
+    SpawnHeading = 0.0 -- Spawn yönü
+}
+
+-- Bildirim Sistemi
+Config.NotificationSystem = {
+    Duration = 5000, -- Bildirim süresi (ms)
+    Position = 'top-right', -- Bildirim pozisyonu
+    Types = {
+        success = {
+            color = '#00ff00',
+            icon = 'check'
+        },
+        error = {
+            color = '#ff0000',
+            icon = 'times'
+        },
+        info = {
+            color = '#00ffff',
+            icon = 'info'
+        },
+        warning = {
+            color = '#ffff00',
+            icon = 'exclamation'
+        }
+    }
+}
+
+-- Marker Sistemi
+Config.MarkerSystem = {
+    Type = 1, -- Marker tipi
+    Size = vector3(3.0, 3.0, 1.0), -- Marker boyutu
+    Color = vector4(255, 255, 255, 100), -- Marker rengi
+    DrawDistance = 10.0 -- Çizim mesafesi
+}
+
+-- Blip Sistemi
+Config.BlipSystem = {
+    Scale = 0.8, -- Blip ölçeği
+    ShortRange = true, -- Kısa menzil
+    Colors = {
+        garage = 3,
+        fuel = 1,
+        repair = 5,
+        mod = 5,
+        insurance = 2,
+        impound = 1
+    }
+}
+
 return Config 
