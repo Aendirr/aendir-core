@@ -80,12 +80,93 @@ Aendir Core Framework, FiveM için geliştirilmiş kapsamlı bir oyun çerçeves
 
 ## Kurulum
 
-1. Dosyaları `resources` klasörüne kopyalayın
-2. `server.cfg` dosyasına `ensure aendir-core` ekleyin
-3. Veritabanı tablolarını oluşturun
-4. Sunucuyu yeniden başlatın
+### FiveM Sunucusu Kurulumu
 
-## Veritabanı Tabloları
+1. FiveM Sunucusu Kurulumu:
+```bash
+# Sunucu klasörü oluştur
+mkdir fivem-server
+cd fivem-server
+
+# FiveM Sunucu Artifacts'ı indir
+wget https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/latest/fx.tar.xz
+
+# Arşivi çıkart
+tar xf fx.tar.xz
+
+# Çalıştırma izinlerini ver
+chmod +x run.sh
+```
+
+2. Veritabanı Kurulumu:
+```bash
+# MySQL kurulumu
+sudo apt update
+sudo apt install mysql-server
+
+# MySQL'i başlat
+sudo systemctl start mysql
+sudo systemctl enable mysql
+
+# Veritabanı oluştur
+sudo mysql -u root -p
+```
+
+MySQL konsolunda:
+```sql
+CREATE DATABASE aendir;
+USE aendir;
+
+# Veritabanı tablolarını oluştur
+source /path/to/aendir-core/database/schema.sql
+source /path/to/aendir-core/database/items.sql
+source /path/to/aendir-core/database/vehicles.sql
+```
+
+3. Resource Kurulumu:
+```bash
+# Resources klasörü oluştur
+mkdir -p resources
+
+# Aendir Core'u kopyala
+cp -r /path/to/aendir-core resources/
+
+# Bağımlılıkları kur
+cd resources
+git clone https://github.com/overextended/ox_lib.git
+git clone https://github.com/overextended/oxmysql.git
+```
+
+4. Server.cfg Düzenleme:
+```cfg
+# Server.cfg dosyasını düzenle
+nano server.cfg
+```
+
+Aşağıdaki satırları ekle:
+```cfg
+# Veritabanı Bağlantısı
+set mysql_connection_string "mysql://user:password@localhost/aendir?charset=utf8mb4"
+
+# Resource Sıralaması
+ensure oxmysql
+ensure ox_lib
+ensure aendir-core
+
+# Sunucu Ayarları
+set sv_hostname "Aendir Core"
+set sv_maxclients 32
+set sv_scriptHookAllowed 0
+set sv_cheats 0
+```
+
+5. Sunucuyu Başlatma:
+```bash
+# Sunucuyu başlat
+./run.sh
+```
+
+### Veritabanı Tabloları
 
 ### vehicles
 ```sql
