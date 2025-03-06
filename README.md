@@ -1,133 +1,122 @@
-# Aendir Core
+# Aendir Core Framework
 
-Aendir Core, FiveM için geliştirilmiş modern ve kapsamlı bir roleplay framework'üdür.
+Aendir Core Framework, FiveM için geliştirilmiş kapsamlı bir oyun çerçevesidir. Bu framework, gerçekçi bir hayat simülasyonu sunmak için tasarlanmıştır.
 
 ## Özellikler
 
-### 1. Karakter Sistemi
-- Çoklu karakter desteği
-- Detaylı karakter bilgileri
-- Karakter oluşturma/düzenleme
-- Karakter silme
-- Karakter seçme
+### Araç Sistemi
 
-### 2. Whitelist Sistemi
-- Discord entegrasyonu
-- Teamspeak entegrasyonu
-- Yaş kontrolü
-- Başvuru sistemi
-- Otomatik onay/red sistemi
+#### Araç Satın Alma
+- Farklı araç kategorileri (Premium, Lüks, Ekonomik)
+- Test sürüşü imkanı
+- Özel plaka sistemi
+- Araç satış sistemi
+- Araç fiyatlandırma sistemi
 
-### 3. Banka Sistemi
-- Çoklu banka lokasyonları
-- ATM'ler
-- Para transferi
-- Hesap yönetimi
-- Kredi sistemi
+#### Araç Modifiye
+- Kapsamlı modifiye kategorileri
+  - Spoiler
+  - Tamponlar
+  - Yan Paneller
+  - Egzoz
+  - Kafes
+  - Radyatör
+  - Çamurluk
+  - Kaput
+  - Çatı
+  - Motor
+  - Frenler
+  - Transmisyon
+  - Korna
+  - Süspansiyon
+  - Zırh
+  - Turbo
+  - Xenon
+  - Tekerlekler
+  - Renk
+  - Aksesuarlar
+  - Plaka
+  - Neon
+  - Cam
+  - Livery
+  - Extra
+- Modifiye fiyatlandırma sistemi
+- Modifiye kaydetme ve yükleme
+- Modifiye logları
 
-### 4. Araç Sistemi
-- Garaj sistemi
-- Araç modifiye
-- Araç sigorta
-- Araç kiralama
-- Araç satın alma
-- Araç kategorileri:
-  - Polis Araçları
-  - Ambulans Araçları
-  - Taksi Araçları
-  - Sivil Araçlar
-  - SUV Araçlar
-  - Spor Araçlar
-  - Motosikletler
+#### Araç Garaj
+- Çoklu garaj noktaları
+- Araç çekme sistemi
+- Araç park etme
+- Garaj yönetimi
+- Garaj logları
 
-### 5. Ev Sistemi
-- Ev tipleri:
-  - Daire
-  - Ev
-  - Malikane
-- Depolama sistemi
-- Ev satın alma/kiralama
-- Ev içi etkileşimler
-- Garaj entegrasyonu
+#### Araç Yakıt
+- Gerçekçi yakıt tüketimi
+- Yakıt istasyonları
+- Yakıt doldurma sistemi
+- Yakıt kontrolü
+- Yakıt logları
 
-### 6. İşletme Sistemi
-- İşletme tipleri
-- İşletme yönetimi
-- Çalışan sistemi
-- Envanter yönetimi
-- Para yönetimi
+#### Araç Hasar
+- Detaylı hasar sistemi
+- Tamir sistemi
+- Sigorta sistemi
+- Hasar kaydetme
+- Hasar logları
 
-### 7. Envanter Sistemi
-- Ağırlık sistemi
-- Slot sistemi
-- Eşya tipleri:
-  - Silahlar
-  - Yiyecekler
-  - İçecekler
-  - Medikal
-  - Araçlar
-  - Diğer
-- Kullanım sistemi
-- Transfer sistemi
+#### Araç Takip
+- Takip cihazı sistemi
+- Gerçek zamanlı takip
+- Takip yönetimi
+- Takip logları
 
-### 8. Yetenek Sistemi
-- Güç
-- Dayanıklılık
-- Sürüş
-- Ateş Etme
-- Seviye sistemi
-- Tecrübe sistemi
-
-### 9. Başarı Sistemi
-- Başarı kategorileri
-- Ödül sistemi
-- İlerleme takibi
-- Bildirim sistemi
-
-### 10. Görev Sistemi
-- Görev tipleri
-- İlerleme sistemi
-- Ödül sistemi
-- Görev takibi
-
-### 11. Log Sistemi
-- Detaylı log kayıtları
-- Log kategorileri
-- Log filtreleme
-- Log arşivleme
-
-### 12. Admin Sistemi
-- Admin komutları
-- Yetki sistemi
+#### Genel Özellikler
+- Motor kontrolü (M tuşu)
+- Kilit sistemi (U tuşu)
+- Plaka sistemi
 - Log sistemi
-- Oyuncu yönetimi
+- Bildirim sistemi
 
 ## Kurulum
 
 1. Dosyaları `resources` klasörüne kopyalayın
-2. `server.cfg` dosyasına şu satırı ekleyin:
-```cfg
-ensure aendir-core
+2. `server.cfg` dosyasına `ensure aendir-core` ekleyin
+3. Veritabanı tablolarını oluşturun
+4. Sunucuyu yeniden başlatın
+
+## Veritabanı Tabloları
+
+### vehicles
+```sql
+CREATE TABLE IF NOT EXISTS `vehicles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(50) NOT NULL,
+  `plate` varchar(8) NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `price` int(11) NOT NULL,
+  `stored` tinyint(1) NOT NULL DEFAULT 1,
+  `insured` tinyint(1) NOT NULL DEFAULT 0,
+  `tracker` tinyint(1) NOT NULL DEFAULT 0,
+  `position` text NOT NULL,
+  `properties` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `plate` (`plate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
 
-3. Veritabanını oluşturun:
-```bash
-mysql -u root -p < database/schema.sql
-mysql -u root -p aendir < database/items.sql
-mysql -u root -p aendir < database/vehicles.sql
+### logs
+```sql
+CREATE TABLE IF NOT EXISTS `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) NOT NULL,
+  `identifier` varchar(50) NOT NULL,
+  `action` varchar(50) NOT NULL,
+  `details` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
-
-4. `config.lua` dosyasını düzenleyin:
-- Sunucu ayarlarını
-- Discord webhook URL'sini
-- Teamspeak bilgilerini
-
-## Gereksinimler
-
-- FiveM Server
-- MySQL Server
-- Discord Bot
-- Teamspeak Server
 
 ## Bağımlılıklar
 
