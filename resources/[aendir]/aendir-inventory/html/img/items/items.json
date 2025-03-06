@@ -1,0 +1,90 @@
+{
+    "phone": {
+        "label": "Telefon",
+        "image": "phone.png",
+        "type": "item",
+        "weight": 0.5,
+        "usable": true,
+        "description": "Akıllı telefon"
+    },
+    "radio": {
+        "label": "Telsiz",
+        "image": "radio.png",
+        "type": "item",
+        "weight": 0.3,
+        "usable": true,
+        "description": "İletişim için telsiz"
+    },
+    "clock": {
+        "label": "Saat",
+        "image": "clock.png",
+        "type": "item",
+        "weight": 0.1,
+        "usable": false,
+        "description": "Zamanı gösteren saat"
+    },
+    "money": {
+        "label": "Para",
+        "image": "money.png",
+        "type": "item",
+        "weight": 0,
+        "usable": false,
+        "description": "Para birimi"
+    },
+    "water": {
+        "label": "Su",
+        "image": "water.png",
+        "type": "item",
+        "weight": 0.5,
+        "usable": true,
+        "description": "İçilebilir su"
+    },
+    "food": {
+        "label": "Yiyecek",
+        "image": "food.png",
+        "type": "item",
+        "weight": 0.3,
+        "usable": true,
+        "description": "Yenilebilir yiyecek"
+    },
+    "drug": {
+        "label": "Uyuşturucu",
+        "image": "drug.png",
+        "type": "item",
+        "weight": 0.1,
+        "usable": true,
+        "description": "Uyuşturucu madde"
+    },
+    "armor": {
+        "label": "Zırh",
+        "image": "armor.png",
+        "type": "item",
+        "weight": 2.0,
+        "usable": true,
+        "description": "Koruma zırhı"
+    },
+    "weapon_pistol": {
+        "label": "Tabanca",
+        "image": "weapon_pistol.png",
+        "type": "weapon",
+        "weight": 1.0,
+        "usable": true,
+        "description": "Tabanca silahı"
+    },
+    "weapon_smg": {
+        "label": "SMG",
+        "image": "weapon_smg.png",
+        "type": "weapon",
+        "weight": 2.0,
+        "usable": true,
+        "description": "Hafif makineli tüfek"
+    },
+    "weapon_rifle": {
+        "label": "Tüfek",
+        "image": "weapon_rifle.png",
+        "type": "weapon",
+        "weight": 3.0,
+        "usable": true,
+        "description": "Tüfek silahı"
+    }
+} 

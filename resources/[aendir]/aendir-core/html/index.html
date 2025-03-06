@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aendir Core</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Karakter Menüsü -->
+    <div id="character-menu" class="menu">
+        <div class="menu-header">
+            <h2>Karakter Menüsü</h2>
+            <button class="close-button" onclick="closeMenu('character-menu')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="menu-content">
+            <div class="character-list">
+                <!-- Karakterler buraya dinamik olarak eklenecek -->
+            </div>
+            <div class="character-creation">
+                <h3>Yeni Karakter</h3>
+                <form id="character-form">
+                    <div class="form-group">
+                        <label for="character-name">İsim</label>
+                        <input type="text" id="character-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="character-model">Model</label>
+                        <select id="character-model" required>
+                            <option value="a_m_y_business_03">İş Adamı</option>
+                            <option value="a_m_y_skater_01">Kaykaycı</option>
+                            <option value="a_m_y_hipster_01">Hipster</option>
+                        </select>
+                    </div>
+                    <button type="submit">Karakter Oluştur</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Envanter Menüsü -->
+    <div id="inventory-menu" class="menu">
+        <div class="menu-header">
+            <h2>Envanter</h2>
+            <button class="close-button" onclick="closeMenu('inventory-menu')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="menu-content">
+            <div class="inventory-grid">
+                <!-- Eşyalar buraya dinamik olarak eklenecek -->
+            </div>
+            <div class="inventory-info">
+                <div class="weight-bar">
+                    <div class="weight-progress"></div>
+                </div>
+                <div class="weight-text">
+                    <span class="current-weight">0</span> / <span class="max-weight">50</span> kg
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menü -->
+    <div id="main-menu" class="menu">
+        <div class="menu-header">
+            <h2>Menü</h2>
+            <button class="close-button" onclick="closeMenu('main-menu')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="menu-content">
+            <div class="menu-grid">
+                <div class="menu-item" onclick="openMenu('character-menu')">
+                    <i class="fas fa-user"></i>
+                    <span>Karakter</span>
+                </div>
+                <div class="menu-item" onclick="openMenu('inventory-menu')">
+                    <i class="fas fa-box"></i>
+                    <span>Envanter</span>
+                </div>
+                <div class="menu-item" onclick="openMenu('phone-menu')">
+                    <i class="fas fa-phone"></i>
+                    <span>Telefon</span>
+                </div>
+                <div class="menu-item" onclick="openMenu('vehicle-menu')">
+                    <i class="fas fa-car"></i>
+                    <span>Araç</span>
+                </div>
+                <div class="menu-item" onclick="openMenu('property-menu')">
+                    <i class="fas fa-home"></i>
+                    <span>Mülk</span>
+                </div>
+                <div class="menu-item" onclick="openMenu('business-menu')">
+                    <i class="fas fa-briefcase"></i>
+                    <span>İşletme</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bildirimler -->
+    <div id="notifications"></div>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar" class="progress-bar">
+        <div class="progress-content">
+            <div class="progress-icon">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <div class="progress-text">İşlem yapılıyor...</div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html> 

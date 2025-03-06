@@ -1,0 +1,46 @@
+{
+    "phone": {
+        "label": "Telefon",
+        "image": "phone.png"
+    },
+    "radio": {
+        "label": "Telsiz",
+        "image": "radio.png"
+    },
+    "clock": {
+        "label": "Saat",
+        "image": "clock.png"
+    },
+    "money": {
+        "label": "Para",
+        "image": "money.png"
+    },
+    "water": {
+        "label": "Su",
+        "image": "water.png"
+    },
+    "food": {
+        "label": "Yiyecek",
+        "image": "food.png"
+    },
+    "drug": {
+        "label": "Uyuşturucu",
+        "image": "drug.png"
+    },
+    "armor": {
+        "label": "Zırh",
+        "image": "armor.png"
+    },
+    "weapon_pistol": {
+        "label": "Tabanca",
+        "image": "weapon_pistol.png"
+    },
+    "weapon_smg": {
+        "label": "SMG",
+        "image": "weapon_smg.png"
+    },
+    "weapon_rifle": {
+        "label": "Tüfek",
+        "image": "weapon_rifle.png"
+    }
+} 

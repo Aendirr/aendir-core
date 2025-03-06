@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aendir Inventory</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="inventory" class="menu">
+        <div class="menu-header">
+            <h2>Envanter</h2>
+            <button class="close-button" onclick="closeInventory()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="menu-content">
+            <div class="inventory-grid" id="inventory-grid">
+                <!-- Envanter slotları buraya dinamik olarak eklenecek -->
+            </div>
+            <div class="weight-bar">
+                <div class="weight-text">
+                    <span id="current-weight">0</span> / <span id="max-weight">0</span> kg
+                </div>
+                <div class="weight-progress">
+                    <div class="weight-fill" id="weight-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notifications"></div>
+    <div id="progress-bar" class="progress-bar">
+        <div class="progress-icon">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <div class="progress-text">İşlem yapılıyor...</div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html> 
